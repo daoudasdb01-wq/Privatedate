@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fanvue - Jenny AI image</title>
+    <!-- Chargement des icônes professionnelles -->
+    <link rel="stylesheet" href="https://cloudflare.com">
     <style>
-        /* Design général calqué sur l'interface Fanvue avec ajustement de couleur (thème violet électrique très sombre) */
+        /* Thème sombre premium */
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             background-color: #0b0914; 
@@ -14,7 +16,6 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            overflow: hidden; /* Bloque le défilement pour forcer l'interaction avec le pop-up */
         }
         
         .wrapper { 
@@ -25,24 +26,11 @@
             position: relative;
         }
 
-        /* Fausse barre d'adresse du navigateur en haut */
-        .browser-bar {
-            background-color: #007ae6; /* Changement de nuance bleu */
-            color: white;
-            padding: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        /* Bannière de profil (Neon violette) */
+        /* Bannière de profil */
         .banner {
             width: 100%;
-            height: 130px;
+            height: 140px;
             background: linear-gradient(135px, #3b0066, #8000ff);
-            object-fit: cover;
         }
 
         /* Contenu du profil */
@@ -68,7 +56,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 35px;
+            overflow: hidden;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .follow-btn {
@@ -79,12 +72,13 @@
             border-radius: 20px;
             font-size: 13px;
             font-weight: bold;
+            cursor: pointer;
         }
 
         .display-name-row {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             margin-bottom: 2px;
         }
         .display-name {
@@ -92,12 +86,13 @@
             font-weight: 700;
         }
         .ai-tag {
-            background-color: #3d3d5c;
+            background-color: #252238;
             color: #a3a3c2;
             font-size: 10px;
-            padding: 2px 4px;
+            padding: 2px 6px;
             border-radius: 4px;
             font-weight: bold;
+            border: 1px solid #3d3d5c;
         }
 
         .username {
@@ -106,13 +101,21 @@
             margin-bottom: 12px;
         }
 
-        /* Compteurs icônes */
+        /* Compteurs avec icônes */
         .counters {
             display: flex;
-            gap: 15px;
+            gap: 18px;
             font-size: 13px;
             color: #ffffff;
             margin-bottom: 15px;
+        }
+        .counters span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .counters i {
+            color: #a3a3c2;
         }
 
         .bio {
@@ -122,10 +125,10 @@
             margin-bottom: 15px;
         }
 
-        /* Gros bouton vert de Fanvue personnalisé */
+        /* Bouton vert Fanvue */
         .join-btn {
             display: block;
-            background-color: #00ff66; /* Vert fluo d'origine */
+            background-color: #00ff66; 
             color: #000000;
             text-align: center;
             text-decoration: none;
@@ -164,36 +167,62 @@
             font-size: 12px;
             font-weight: bold;
         }
-        .filter-active { background-color: #ffffff; color: #000000; }
+        .filter-badge-active { background-color: #ffffff; color: #000000; }
 
-        /* Grille de photos d'arrière-plan floutée */
+        /* Grille de photos floutées */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 4px;
-            padding: 0 2px;
-            filter: blur(8px); /* Floute tout l'arrière-plan */
-            opacity: 0.3;
+            gap: 6px;
+            padding: 0 10px 20px 10px;
         }
         .grid-item {
             aspect-ratio: 0.85;
-            background-color: #252238;
+            background-color: #1a1726;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #252238;
+        }
+        /* Utilisation de votre photo de profil pour l'effet de galerie floutée */
+        .grid-item::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://styles.redditmedia.com/t5_jnn5la/styles/profileIcon_3yurfu5dhplh1.jpeg?frame=1&auto=webp&crop=256%3A256%2Csmart&s=e916f3c6e1a65ba639aab358f4f7907bf72db2e4');
+            background-size: cover;
+            background-position: center;
+            filter: blur(18px);
+            opacity: 0.45;
+        }
+        .grid-lock {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ffffff;
+            font-size: 20px;
+            background: rgba(0,0,0,0.4);
+            padding: 10px;
+            border-radius: 50%;
         }
 
-        /* RIDEAU SOMBRE ET POP-UP (La fenêtre surgissante) */
+        /* SYSTEME DE POP-UP FERMABLE */
         .overlay {
-            position: absolute;
-            top: 45px; /* Démarre sous la fausse barre de navigation */
+            position: fixed;
+            top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% - 45px);
-            background-color: rgba(0, 0, 0, 0.65);
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
             box-sizing: border-box;
             z-index: 100;
+            transition: opacity 0.3s ease;
         }
 
         .popup-card {
@@ -205,30 +234,36 @@
             max-width: 340px;
             text-align: center;
             position: relative;
-            box-shadow: 0px 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.5);
         }
 
         .popup-close {
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 18px;
+            font-size: 20px;
             color: #8c8c8c;
             cursor: pointer;
+            padding: 5px;
         }
 
         .popup-avatar {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background-color: #e1e1e6;
+            background-color: #f3f3f6;
             margin: 0 auto 20px auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
             border: 2px solid #ffffff;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .popup-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .popup-title {
@@ -236,7 +271,6 @@
             font-weight: 800;
             line-height: 1.3;
             margin-bottom: 12px;
-            padding: 0 10px;
         }
 
         .popup-desc {
@@ -246,10 +280,10 @@
             margin-bottom: 25px;
         }
 
-        /* LE BOUTON CLIQUE UNIQUE (Lien d'affiliation CPA) */
+        /* Lien d'affiliation CPA */
         .popup-cta {
             display: block;
-            background-color: #12101c; /* Reprend la couleur sombre du thème */
+            background-color: #12101c; 
             color: #ffffff;
             text-decoration: none;
             padding: 14px;
@@ -263,26 +297,22 @@
             font-size: 14px;
             font-weight: bold;
             color: #000000;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
-    <!-- Fausse barre d'adresse de navigation internet -->
-    <div class="browser-bar">
-        <span>✕</span>
-        <span>fanvue.com</span>
-        <span>⋮</span>
-    </div>
-
-    <!-- Bannière stylisée -->
+    <!-- Bannière supérieure -->
     <div class="banner"></div>
 
-    <!-- Zone Profil principale -->
+    <!-- Zone Profil -->
     <div class="profile-container">
         <div class="profile-header">
-            <div class="avatar">👩‍🎨</div>
+            <div class="avatar">
+                <img src="https://styles.redditmedia.com/t5_jnn5la/styles/profileIcon_3yurfu5dhplh1.jpeg?frame=1&auto=webp&crop=256%3A256%2Csmart&s=e916f3c6e1a65ba639aab358f4f7907bf72db2e4" alt="Jenny">
+            </div>
             <button class="follow-btn">Suivre gratuitement</button>
         </div>
 
@@ -292,57 +322,31 @@
         </div>
         <div class="username">@Jenny9726</div>
 
+        <!-- Compteurs avec icônes -->
         <div class="counters">
-            <span>🖼️ 355</span>
-            <span>📹 6</span>
-            <span>❤️ 23</span>
+            <span><i class="fa-regular fa-image"></i> 355</span>
+            <span><i class="fa-solid fa-video"></i> 6</span>
+            <span><i class="fa-solid fa-heart"></i> 23</span>
         </div>
 
         <div class="bio">
-            Retrouvez mes créations d'images IA privées et mes albums exclusifs... <span style="color:#a3a3c2;">voir plus</span>
+            Retrouvez mes créations d'images IA privées et mes albums exclusifs... <span style="color:#a3a3c2; cursor:pointer;">voir plus</span>
         </div>
 
         <div class="join-btn">Rejoindre gratuitement</div>
     </div>
 
-    <!-- Onglets Médias -->
+    <!-- Onglets -->
     <div class="tabs">
         <div>Publications (0)</div>
         <div class="tab-active">Médias (361)</div>
     </div>
 
+    <!-- Filtres -->
     <div class="filters">
-        <div class="filter-badge filter-active">Tout 361</div>
+        <div class="filter-badge filter-badge-active">Tout 361</div>
         <div class="filter-badge">Photos 355</div>
         <div class="filter-badge">Vidéos 6</div>
     </div>
 
-    <!-- Galerie en arrière-plan (qui apparaît floutée) -->
-    <div class="photo-grid">
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-        <div class="grid-item"></div>
-    </div>
-
-    <!-- LA FENÊTRE SURGISSANTE (POP-UP) PAR-DESSUS TOUT -->
-    <div class="overlay">
-        <div class="popup-card">
-            <div class="popup-close">✕</div>
-            
-            <div class="popup-avatar">👩‍🎨</div>
-            
-            <!-- Message de capture calqué sur votre exemple -->
-            <div class="popup-title">Vous voulez en voir plus de Jenny AI image ?</div>
-            <div class="popup-desc">Accédez à tout le contenu de Jenny AI image sur Fanvue</div>
-            
-            <!-- BOUTON D'ACTION PRINCIPAL : Mettez votre lien CPA à la place du "#" -->
-            <a href="#" class="popup-cta">Inscrivez-vous gratuitement</a>
-            
-            <div class="popup-login">Se connecter</div>
-        </div>
-    </div>
-</div>
-
-</body>
-</html>
+    <!-- Galerie de photos en arrière-plan -->
