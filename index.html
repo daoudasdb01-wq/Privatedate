@@ -24,6 +24,7 @@
             background: #12101c; 
             min-height: 100vh;
             position: relative;
+            padding-bottom: 40px;
         }
 
         /* Bannière de profil */
@@ -125,7 +126,7 @@
             margin-bottom: 15px;
         }
 
-        /* Bouton vert Fanvue */
+        /* Bouton vert Fanvue cliquable */
         .join-btn {
             display: block;
             background-color: #00ff66; 
@@ -137,9 +138,10 @@
             font-weight: bold;
             font-size: 15px;
             margin-bottom: 20px;
+            cursor: pointer;
         }
 
-        /* Onglets */
+        /* Onglets ajustés (Publications à 28) */
         .tabs {
             display: flex;
             justify-content: space-around;
@@ -150,6 +152,7 @@
             font-weight: bold;
             color: #a3a3c2;
         }
+        .tab-item { cursor: pointer; }
         .tab-active { color: #ffffff; border-bottom: 2px solid #ffffff; padding-bottom: 8px; }
 
         /* Filtres médias */
@@ -166,10 +169,11 @@
             border-radius: 15px;
             font-size: 12px;
             font-weight: bold;
+            cursor: pointer;
         }
         .filter-badge-active { background-color: #ffffff; color: #000000; }
 
-        /* Grille de photos floutées */
+        /* Grille de 10 photos floutées */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -183,18 +187,18 @@
             position: relative;
             overflow: hidden;
             border: 1px solid #252238;
+            cursor: pointer;
         }
-        /* Utilisation de votre photo de profil pour l'effet de galerie floutée */
         .grid-item::before {
             content: '';
             position: absolute;
             width: 100%;
             height: 100%;
-            background-image: url('https://styles.redditmedia.com/t5_jnn5la/styles/profileIcon_3yurfu5dhplh1.jpeg?frame=1&auto=webp&crop=256%3A256%2Csmart&s=e916f3c6e1a65ba639aab358f4f7907bf72db2e4');
+            background-image: url('https://redditmedia.com');
             background-size: cover;
             background-position: center;
-            filter: blur(18px);
-            opacity: 0.45;
+            filter: blur(22px);
+            opacity: 0.5;
         }
         .grid-lock {
             position: absolute;
@@ -203,12 +207,12 @@
             transform: translate(-50%, -50%);
             color: #ffffff;
             font-size: 20px;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             padding: 10px;
             border-radius: 50%;
         }
 
-        /* SYSTEME DE POP-UP FERMABLE */
+        /* FENÊTRE POP-UP FIXE */
         .overlay {
             position: fixed;
             top: 0;
@@ -221,8 +225,10 @@
             justify-content: center;
             padding: 20px;
             box-sizing: border-box;
-            z-index: 100;
-            transition: opacity 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+            display: none;
+            transition: opacity 0.2s ease;
         }
 
         .popup-card {
@@ -280,7 +286,7 @@
             margin-bottom: 25px;
         }
 
-        /* Lien d'affiliation CPA */
+        /* Lien unique CPA (Remplacez # par votre lien final) */
         .popup-cta {
             display: block;
             background-color: #12101c; 
@@ -311,9 +317,9 @@
     <div class="profile-container">
         <div class="profile-header">
             <div class="avatar">
-                <img src="https://styles.redditmedia.com/t5_jnn5la/styles/profileIcon_3yurfu5dhplh1.jpeg?frame=1&auto=webp&crop=256%3A256%2Csmart&s=e916f3c6e1a65ba639aab358f4f7907bf72db2e4" alt="Jenny">
+                <img src="https://redditmedia.com" alt="Jenny">
             </div>
-            <button class="follow-btn">Suivre gratuitement</button>
+            <button class="follow-btn" id="followBtn">Suivre gratuitement</button>
         </div>
 
         <div class="display-name-row">
@@ -330,23 +336,13 @@
         </div>
 
         <div class="bio">
-            Retrouvez mes créations d'images IA privées et mes albums exclusifs... <span style="color:#a3a3c2; cursor:pointer;">voir plus</span>
+            Retrouvez mes créations d'images IA privées et mes albums exclusifs... <span style="color:#a3a3c2; cursor:pointer;" id="bioMore">voir plus</span>
         </div>
 
-        <div class="join-btn">Rejoindre gratuitement</div>
+        <!-- Bouton vert déclencheur -->
+        <div class="join-btn" id="joinBtn">Rejoindre gratuitement</div>
     </div>
 
-    <!-- Onglets -->
+    <!-- Onglets mis à jour -->
     <div class="tabs">
-        <div>Publications (0)</div>
-        <div class="tab-active">Médias (361)</div>
-    </div>
-
-    <!-- Filtres -->
-    <div class="filters">
-        <div class="filter-badge filter-badge-active">Tout 361</div>
-        <div class="filter-badge">Photos 355</div>
-        <div class="filter-badge">Vidéos 6</div>
-    </div>
-
-    <!-- Galerie de photos en arrière-plan -->
+        <div class="tab-item" id="tabPubs">Publications (28)</div>
