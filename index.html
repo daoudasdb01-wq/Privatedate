@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fanvue - Jenny AI image</title>
     <style>
-        /* BASE & THEME SOMBRE DE L'INTERFACE */
+        /* DESIGN GLOBAL ET COULEURS DE BASE */
         html, body {
             background-color: #0b0914;
             color: #ffffff;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
         
         body {
@@ -20,7 +19,7 @@
             justify-content: center;
         }
         
-        /* CONTENEUR DU SMARTPHONE */
+        /* CADRE PRINCIPAL SANS BLOCAGE */
         .wrapper {
             max-width: 420px;
             width: 100%;
@@ -28,25 +27,23 @@
             min-height: 100vh;
             position: relative;
             box-sizing: border-box;
-            padding-bottom: 60px;
+            padding-bottom: 40px;
         }
 
-        /* BANNIERE DE COUVERTURE SANS DEPENDANCE */
+        /* BANNIÈRE DE COUVERTURE */
         .banner {
             width: 100%;
             height: 140px;
             background: linear-gradient(135px, #3b0066, #8000ff);
         }
 
-        /* SECTION INFORMATIONS DU PROFIL */
+        /* BLOC CONTENU PROFIL */
         .profile-container {
             padding: 0 16px;
             margin-top: -45px;
             position: relative;
-            z-index: 10;
         }
 
-        /* BLOC AVATAR + BOUTON SUIVRE */
         .profile-header {
             display: flex;
             justify-content: space-between;
@@ -54,7 +51,7 @@
             margin-bottom: 12px;
         }
 
-        /* CADRE DE LA PHOTO DE PROFIL CIBLEE */
+        /* DESIGN DE L'AVATAR CORRIGÉ */
         .avatar {
             width: 85px;
             height: 85px;
@@ -62,17 +59,17 @@
             border: 3px solid #12101c;
             background-color: #252238;
             overflow: hidden;
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
 
-        /* BOUTON DE SUIVI SECONDAIRE */
         .follow-btn {
             background-color: #252238;
             color: #ffffff;
@@ -82,10 +79,8 @@
             font-size: 13px;
             font-weight: bold;
             cursor: pointer;
-            outline: none;
         }
 
-        /* NOM D'AFFICHAGE ET BADGE SPECIAL IA */
         .display-name-row {
             display: flex;
             align-items: center;
@@ -96,7 +91,6 @@
         .display-name {
             font-size: 22px;
             font-weight: 700;
-            color: #ffffff;
         }
         
         .ai-tag {
@@ -107,17 +101,15 @@
             border-radius: 4px;
             font-weight: bold;
             border: 1px solid #3d3d5c;
-            text-transform: uppercase;
         }
 
-        /* IDENTIFIANT @USERNAME */
         .username {
             font-size: 14px;
             color: #a3a3c2;
             margin-bottom: 12px;
         }
 
-        /* BLOC COMPTEURS MEDIAS ET COEURS */
+        /* COMPTEURS AVEC ICÔNES INTEGRÉES */
         .counters {
             display: flex;
             gap: 18px;
@@ -132,16 +124,12 @@
             gap: 6px;
         }
         
-        /* ICONS SVG INTEGRES POUR EVITER LE CHARGEMENT CASSÉ */
         .svg-icon {
             width: 16px;
             height: 16px;
             fill: #a3a3c2;
-            display: inline-block;
-            vertical-align: middle;
         }
 
-        /* DESCRIPTION DU PROFIL (BIO) */
         .bio {
             font-size: 13px;
             color: #e1e1e6;
@@ -153,10 +141,9 @@
         .bio-more {
             color: #a3a3c2;
             cursor: pointer;
-            font-weight: 500;
         }
 
-        /* GROS BOUTON VERT ACTION INTERACTIF PRINCIPAL */
+        /* BOUTON VERT D'ACCÈS */
         .join-btn {
             display: block;
             background-color: #00ff66; 
@@ -169,15 +156,9 @@
             font-size: 15px;
             margin-bottom: 22px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 255, 102, 0.2);
-            transition: transform 0.1s ease;
-        }
-        
-        .join-btn:active {
-            transform: scale(0.98);
         }
 
-        /* NAVIGATION PAR ONGLETS (PUBLICATIONS & MEDIAS REPARÉS) */
+        /* ONGLETS INTERACTIFS */
         .tabs {
             display: flex;
             border-bottom: 1px solid #252238;
@@ -192,7 +173,6 @@
             padding-bottom: 12px;
             color: #a3a3c2;
             cursor: pointer;
-            user-select: none;
         }
         
         .tab-active { 
@@ -200,7 +180,6 @@
             border-bottom: 2px solid #ffffff; 
         }
 
-        /* SYSTEME DE BADGES FILTRES */
         .filters {
             display: flex;
             gap: 8px;
@@ -215,7 +194,6 @@
             border-radius: 15px;
             font-size: 12px;
             font-weight: bold;
-            cursor: pointer;
         }
         
         .filter-badge-active { 
@@ -223,7 +201,7 @@
             color: #000000; 
         }
 
-        /* MOSAÏQUE TECHNIQUE DE 10 PHOTOS FLOUES */
+        /* GRILLE DE 10 FAUSSES PHOTOS FLOUTÉES ACCESSIBLES */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -241,7 +219,7 @@
             cursor: pointer;
         }
         
-        /* IMAGE FLOUTEE SPECIFIQUE EN ARRIERE-PLAN SANS EMBASSES */
+        /* IMAGE DE REMPLACEMENT SÉCURISÉE SANS CONFLIT */
         .grid-item::before {
             content: '';
             position: absolute;
@@ -249,20 +227,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://redditmedia.com');
+            background-image: url('https://unsplash.com');
             background-size: cover;
             background-position: center;
             filter: blur(20px);
-            opacity: 0.45;
+            opacity: 0.4;
         }
         
-        /* VERROU VISUEL CENTRAL */
         .grid-lock {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0, 0, 0, 0.6);
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -277,7 +254,7 @@
             fill: #ffffff;
         }
 
-        /* STRUCTURE DU COUVERCLE POP-UP (OVERLAY DE CAPTURE) */
+        /* POP-UP MODERNE ET STABLE */
         .overlay {
             position: fixed;
             top: 0;
@@ -285,7 +262,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.8);
-            display: none; /* Controlé dynamiquement en JS */
+            display: none;
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -295,7 +272,6 @@
             transition: opacity 0.2s ease;
         }
 
-        /* CARTE BLANCHE SURGISSANTE */
         .popup-card {
             background-color: #ffffff;
             color: #000000;
@@ -309,7 +285,6 @@
             box-sizing: border-box;
         }
 
-        /* LE BOUTON X DE DEGAGING CONFORME */
         .popup-close {
             position: absolute;
             top: 14px;
@@ -319,36 +294,33 @@
             cursor: pointer;
             padding: 6px;
             line-height: 1;
-            user-select: none;
         }
 
-        /* IMAGE DU MODÈLE DANS LE POPUP */
         .popup-avatar {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background-color: #f3f3f6;
+            background-color: #252238;
             margin: 0 auto 18px auto;
             border: 2px solid #ffffff;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             overflow: hidden;
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .popup-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
 
-        /* TITRE ET INVITATION À LA REDIRECTION CPA */
         .popup-title {
             font-size: 18px;
             font-weight: 800;
             line-height: 1.3;
             margin: 0 0 12px 0;
-            color: #000000;
         }
 
         .popup-desc {
@@ -358,9 +330,45 @@
             margin: 0 0 24px 0;
         }
 
-        /* BOUTON NOIR D'AFFILIATION CPA UNIQUE */
         .popup-cta {
             display: block;
             background-color: #12101c; 
             color: #ffffff;
             text-decoration: none;
+            padding: 14px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .popup-login {
+            font-size: 14px;
+            font-weight: bold;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="banner"></div>
+
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="avatar">
+                    <!-- Image sécurisée hors des serveurs Reddit pour éviter les blocages -->
+                    <img src="https://unsplash.com" alt="Jenny">
+                </div>
+                <button class="follow-btn" id="followBtn">Suivre gratuitement</button>
+            </div>
+
+            <div class="display-name-row">
+                <span class="display-name">Jenny AI image</span>
+                <span class="ai-tag">AI</span>
+            </div>
+            <div class="username">@Jenny9726</div>
+
+            <div class="counters">
+                <span>
+                    <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.96-2.36L6.5 17h11l-3.54-4.71z"/></svg>
